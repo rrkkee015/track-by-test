@@ -10,7 +10,7 @@ export class CheckDirective {
   constructor(private elementRef: ElementRef) {
     const element = this.elementRef.nativeElement;
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
-      mutations.forEach((mutation) => this.check.emit(mutation));
+      this.check.emit(mutations);
     });
 
     observer.observe(element, {
