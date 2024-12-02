@@ -14,8 +14,10 @@ export class CheckDirective {
     });
 
     observer.observe(element, {
-      childList: true,
+      // 하위 모든 노드들의 변경사항 체크
       subtree: true,
+      // node.data에서 발생하는 변경사항 체크
+      characterData: true,
     });
   }
 }
