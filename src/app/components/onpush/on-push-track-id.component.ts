@@ -11,13 +11,13 @@ import { CheckDirective } from '../../directives/check.directive';
   selector: 'app-on-push-track-id',
   standalone: true,
   template: `
-    @for (obj of arr; track obj.id) {
     <div (check)="onCheck()">
+      @for (obj of arr; track obj.id) {
       {{ obj.id }}
       {{ obj.name }}
+      <br />
+      }
     </div>
-    <br />
-    }
     {{ count }}
     <br />
   `,

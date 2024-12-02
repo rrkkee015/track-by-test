@@ -5,13 +5,13 @@ import { CheckDirective } from '../../directives/check.directive';
   selector: 'app-default-track-obj',
   standalone: true,
   template: `
-    @for (obj of arr; track obj) {
     <div (check)="onCheck()">
+      @for (obj of arr; track obj) {
       {{ obj.id }}
       {{ obj.name }}
+      <br />
+      }
     </div>
-    <br />
-    }
     {{ count }}
     <br />
   `,
