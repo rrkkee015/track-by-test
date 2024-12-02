@@ -5,6 +5,7 @@ import { CheckDirective } from '../../directives/check.directive';
   selector: 'app-default-track-obj',
   standalone: true,
   template: `
+    <p>Default + trackBy(Obj)</p>
     <div (check)="onCheck()">
       @for (obj of arr; track obj) {
       {{ obj.id }}

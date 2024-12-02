@@ -11,6 +11,7 @@ import { CheckDirective } from '../../directives/check.directive';
   selector: 'app-on-push-track-id',
   standalone: true,
   template: `
+    <p>OnPush + trackBy(Id)</p>
     <div (check)="onCheck()">
       @for (obj of arr; track obj.id) {
       {{ obj.id }}
