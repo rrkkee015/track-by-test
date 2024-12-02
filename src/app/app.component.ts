@@ -26,13 +26,7 @@ export class AppComponent {
   ];
 
   protected reset(): void {
-    this.arr = [
-      { id: 1, name: 'a' },
-      { id: 2, name: 'b' },
-      { id: 3, name: 'c' },
-      { id: 4, name: 'd' },
-      { id: 5, name: 'e' },
-    ];
+    this.arr = [...this.arr.map((obj) => ({ ...obj }))];
   }
 
   protected change(): void {
