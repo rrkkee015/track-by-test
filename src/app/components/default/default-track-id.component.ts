@@ -1,5 +1,10 @@
 import 'zone.js';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { CheckDirective } from '../../directives/check.directive';
 
 @Component({
@@ -14,18 +19,24 @@ import { CheckDirective } from '../../directives/check.directive';
       <br />
       }
     </div>
-    {{ count }}
+    render : {{ renderCount }}
     <br />
+    ngOnChanges : {{ onChangeCount }}
   `,
   changeDetection: ChangeDetectionStrategy.Default,
   imports: [CheckDirective],
 })
-export class DefaultTrackIdComponent {
+export class DefaultTrackIdComponent implements OnChanges {
   @Input() arr: any;
 
-  count = 0;
+  renderCount = 0;
+  onChangeCount = 0;
 
   onCheck(): void {
-    this.count++;
+    this.renderCount++;
+  }
+
+  ngOnChanges(): void {
+    this.onChangeCount++;
   }
 }
