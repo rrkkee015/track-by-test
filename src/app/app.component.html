@@ -2,8 +2,16 @@
   <button (click)="reset()">reset</button>
 </div>
 <div style="display: flex; width: 100%; justify-content: center">
-  <app-default-track-obj [arr]="arr"></app-default-track-obj>
-  <app-default-track-id [arr]="arr"></app-default-track-id>
-  <app-on-push-track-obj [arr]="arr"></app-on-push-track-obj>
-  <app-on-push-track-id [arr]="arr"></app-on-push-track-id>
+  <div style="padding-left: 50px">
+    <app-default-track-obj [arr]="arr"></app-default-track-obj>
+  </div>
+  <div style="padding-left: 50px">
+    <app-default-track-id [arr]="arr"></app-default-track-id>
+  </div>
+  <div style="padding-left: 50px">
+    <app-on-push-track-obj [arr]="arr"></app-on-push-track-obj>
+  </div>
+  <div style="padding-left: 50px">
+    <app-on-push-track-id [arr]="arr"></app-on-push-track-id>
+  </div>
 </div>
