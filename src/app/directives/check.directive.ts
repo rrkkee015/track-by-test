@@ -9,9 +9,9 @@ export class CheckDirective {
 
   constructor(private elementRef: ElementRef) {
     const element = this.elementRef.nativeElement;
-    const observer = new MutationObserver((mutations: MutationRecord[]) => {
-      this.check.emit(mutations);
-    });
+    const observer = new MutationObserver((mutations: MutationRecord[]) =>
+      this.check.emit(mutations)
+    );
 
     observer.observe(element, {
       // 하위 모든 노드들의 변경사항 체크
