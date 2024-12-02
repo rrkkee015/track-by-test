@@ -46,4 +46,41 @@ export class AppComponent {
     newArr[newArr.length - 1].id = firstId;
     this.arr = newArr;
   }
+
+  protected onlyChangeName(): void {
+    const newArr = [...this.arr];
+    const alpha = [
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+      'k',
+      'l',
+      'm',
+      'n',
+      'o',
+      'p',
+      'q',
+      'r',
+      's',
+      't',
+      'u',
+      'v',
+      'w',
+      'x',
+      'y',
+      'z',
+    ];
+
+    this.arr = newArr.map((obj) => ({
+      ...obj,
+      name: alpha[Math.floor(Math.random() * alpha.length)],
+    }));
+  }
 }
