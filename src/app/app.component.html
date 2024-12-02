@@ -17,3 +17,36 @@
     <app-on-push-track-id [arr]="arr"></app-on-push-track-id>
   </div>
 </div>
+<h1>결론</h1>
+<h2>trackBy 목표</h2>
+<p>
+  trackBy의 주요 목적은 Angular가 목록의 각 항목을 고유하게 식별할 수 있도록
+  하는 것, 이를 통해 Angular는 목록이 변경될 때 DOM을 효율적으로 업데이트 가능
+</p>
+<p>
+  trackBy를 사용하면 불필요한 DOM 요소의 재생성만 변경되고, 데이터의 변경에 따른
+  필요한 업데이트는 여전히 수행됨
+</p>
+<textarea>
+  // 초기 상태
+arr = [
+    { id: 1, name: 'a' },
+    { id: 2, name: 'b' },
+    { id: 3, name: 'c' },
+    { id: 4, name: 'd' },
+    { id: 5, name: 'e' },
+  ];
+
+// 변경된 상태
+arr = [
+    { id: 4, name: 'q' },
+    { id: 2, name: 'n' },
+    { id: 3, name: 'c' },
+    { id: 1, name: 'a' },
+    { id: 5, name: 'e' },
+  ];
+</textarea>
+<p>위와 같은 예제에서 Angular는</p>
+<p>1. DOM 요소들의 순서를 새로운 배열 순서에 맞게 재배열</p>
+<p>2. 변경된 내용(id 4, 2의 name)만 업데이트</p>
+<p>3. 변경되지 않은 요소(id 3,1,5)는 그대로 유지</p>
