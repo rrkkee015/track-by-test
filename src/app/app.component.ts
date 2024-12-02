@@ -34,4 +34,16 @@ export class AppComponent {
       { id: 5, name: 'e' },
     ];
   }
+
+  protected change(): void {
+    const newArr = [...this.arr];
+    const firstId = newArr[0].id;
+
+    for (let idx = 0; idx < newArr.length - 1; ++idx) {
+      newArr[idx].id = newArr[idx + 1].id;
+    }
+
+    newArr[newArr.length - 1].id = firstId;
+    this.arr = newArr;
+  }
 }
