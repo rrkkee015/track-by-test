@@ -8,7 +8,7 @@ import {
 import { CheckDirective } from '../../directives/check.directive';
 
 @Component({
-  selector: 'app-on-push-obj',
+  selector: 'app-on-push-track-obj',
   standalone: true,
   template: `
     @for (obj of arr; track obj) {
