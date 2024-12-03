@@ -1,72 +1,75 @@
-<div style="display: flex; width: 100%; justify-content: center">
-  <button (click)="reset()">reset</button>
-  <button (click)="change()">change</button>
-  <button (click)="onlyChangeName()">Only Change Name</button>
-</div>
-<div style="display: flex; width: 100%; justify-content: center">
-  <div style="padding-left: 50px">
-    <app-default-track-obj [arr]="arr"></app-default-track-obj>
+<div style="margin: 50px">
+  <h1 style="justify-self: center">Track By Test</h1>
+  <div style="display: flex; width: 100%; justify-content: center">
+    <button style="margin-right: 10px" (click)="reset()">reset</button>
+    <button style="margin-right: 10px" (click)="change()">change</button>
+    <button (click)="onlyChangeName()">Only Change Name</button>
   </div>
-  <div style="padding-left: 50px">
-    <app-default-track-id [arr]="arr"></app-default-track-id>
+  <div style="display: flex; width: 100%; justify-content: center">
+    <div style="padding-left: 50px">
+      <app-default-track-obj [arr]="arr"></app-default-track-obj>
+    </div>
+    <div style="padding-left: 50px">
+      <app-default-track-id [arr]="arr"></app-default-track-id>
+    </div>
+    <div style="padding-left: 50px">
+      <app-on-push-track-obj [arr]="arr"></app-on-push-track-obj>
+    </div>
+    <div style="padding-left: 50px">
+      <app-on-push-track-id [arr]="arr"></app-on-push-track-id>
+    </div>
   </div>
-  <div style="padding-left: 50px">
-    <app-on-push-track-obj [arr]="arr"></app-on-push-track-obj>
-  </div>
-  <div style="padding-left: 50px">
-    <app-on-push-track-id [arr]="arr"></app-on-push-track-id>
-  </div>
-</div>
-<h1 style="justify-self: center">결론</h1>
-<div style="display: flex; justify-content: center">
-  <div style="display: block; border: solid 0.1rem; padding: 20px">
-    <h2>trackBy 목표</h2>
-    <p>
-      trackBy의 주요 목적은 Angular가 목록의 각 항목을 고유하게 식별할 수 있도록
-      하는 것, 이를 통해 Angular는 목록이 변경될 때 DOM을 효율적으로 업데이트
-      가능
-    </p>
-    <p>
-      trackBy를 사용하면 불필요한 DOM 요소의 재생성를 막고, 데이터의 변경에 따른
-      필요한 업데이트는 여전히 수행됨
-    </p>
-    <textarea style="height: 300px; width: 400px">
-// 초기 상태
-arr = [
-    { id: 1, name: 'a' },
-    { id: 2, name: 'b' },
-    { id: 3, name: 'c' },
-    { id: 4, name: 'd' },
-    { id: 5, name: 'e' },
-  ];
-
-// 변경된 상태
-arr = [
-    { id: 4, name: 'q' },
-    { id: 2, name: 'n' },
-    { id: 3, name: 'c' },
-    { id: 1, name: 'a' },
-    { id: 5, name: 'e' },
-  ];
-  </textarea
-    >
-    <p>위와 같은 예제에서 Angular는</p>
-    <p>
-      1. DOM 요소들의 순서를 새로운 배열 순서에 맞게 재배열(링크드 리스트로
-      갈아끼운다)
-    </p>
-    <p>2. 변경된 내용(id 4, 2의 name)만 업데이트</p>
-    <p>3. 변경되지 않은 요소(id 3,1,5)는 그대로 유지</p>
-  </div>
-  <div style="display: block; border: solid 0.1rem; padding: 20px">
-    <h2>
-      <a
-        href="https://github.com/angular/angular/blob/10b3dcca8bea1e05f35365d73e39f38daab36f1a/packages/core/src/change_detection/differs/default_iterable_differ.ts#L183"
-        target="_blank"
-        >angular 반복문 체크 함수</a
-      >
-    </h2>
-    <pre><code class="language-javascript">
+  <h1 style="justify-self: center">결론</h1>
+  <div style="display: flex; justify-content: center">
+    <div style="display: block; border: solid 0.1rem; padding: 20px">
+      <h2>trackBy 목표</h2>
+      <p>
+        trackBy의 주요 목적은 Angular가 목록의 각 항목을 고유하게 식별할 수
+        있도록 하는 것
+      </p>
+      <p>이를 통해 Angular는 목록이 변경될 때 DOM을 효율적으로 업데이트 가능</p>
+      <p>
+        trackBy를 사용하면 불필요한 DOM 요소의 재생성를 막고, 데이터의 변경에
+        따른 필요한 업데이트는 여전히 수행됨
+      </p>
+      <pre>
+      <code class="language-javascript">
+        // 초기 상태
+        arr = [
+          {{'{'}} id: 1, name: 'a' {{'}'}},
+          {{'{'}} id: 2, name: 'b' {{'}'}},
+          {{'{'}} id: 3, name: 'c' {{'}'}},
+          {{'{'}} id: 4, name: 'd' {{'}'}},
+          {{'{'}} id: 5, name: 'e' {{'}'}},
+        ];
+        
+        // 변경된 상태
+        arr = [
+          {{'{'}} id: 4, name: 'q' {{'}'}},
+          {{'{'}} id: 2, name: 'n' {{'}'}},
+          {{'{'}} id: 3, name: 'c' {{'}'}},
+          {{'{'}} id: 1, name: 'a' {{'}'}},
+          {{'{'}} id: 5, name: 'e' {{'}'}},
+        ];
+      </code>
+    </pre>
+      <p>위와 같은 예제에서 Angular는</p>
+      <p>
+        1. DOM 요소들의 순서를 새로운 배열 순서에 맞게 재배열 (링크드 리스트로
+        갈아끼운다)
+      </p>
+      <p>2. 변경된 내용(id 4, 2의 name)만 업데이트</p>
+      <p>3. 변경되지 않은 요소(id 3,1,5)는 그대로 유지</p>
+    </div>
+    <div style="display: block; border: solid 0.1rem; padding: 20px">
+      <h2>
+        <a
+          href="https://github.com/angular/angular/blob/10b3dcca8bea1e05f35365d73e39f38daab36f1a/packages/core/src/change_detection/differs/default_iterable_differ.ts#L183"
+          target="_blank"
+          >angular 반복문 체크 함수</a
+        >
+      </h2>
+      <pre><code class="language-javascript">
 check(collection: NgIterable&lt;V&gt;): boolean {{'{'}}
   this._reset();
 
@@ -148,5 +151,6 @@ check(collection: NgIterable&lt;V&gt;): boolean {{'{'}}
   {{'}'}}
     
     </code></pre>
+    </div>
   </div>
 </div>
