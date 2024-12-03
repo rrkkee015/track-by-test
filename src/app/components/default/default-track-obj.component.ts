@@ -12,9 +12,7 @@ import { CheckDirective } from '../../directives/check.directive';
   template: `
     <p>Default + trackBy(Obj)</p>
     <div (check)="onCheck()">
-      @for (obj of arr; track obj) {
-      {{ obj.id }}
-      {{ obj.name }}
+      @for (obj of arr; track obj) { id: {{ obj.id }} | name: {{ obj.name }}
       <br />
       }
     </div>
