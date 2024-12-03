@@ -18,17 +18,20 @@
   </div>
 </div>
 <h1>결론</h1>
-<h2>trackBy 목표</h2>
-<p>
-  trackBy의 주요 목적은 Angular가 목록의 각 항목을 고유하게 식별할 수 있도록
-  하는 것, 이를 통해 Angular는 목록이 변경될 때 DOM을 효율적으로 업데이트 가능
-</p>
-<p>
-  trackBy를 사용하면 불필요한 DOM 요소의 재생성만 변경되고, 데이터의 변경에 따른
-  필요한 업데이트는 여전히 수행됨
-</p>
-<textarea>
-  // 초기 상태
+<div style="display: flex">
+  <div style="display: block; border: solid 0.1rem; padding: 20px">
+    <h2>trackBy 목표</h2>
+    <p>
+      trackBy의 주요 목적은 Angular가 목록의 각 항목을 고유하게 식별할 수 있도록
+      하는 것, 이를 통해 Angular는 목록이 변경될 때 DOM을 효율적으로 업데이트
+      가능
+    </p>
+    <p>
+      trackBy를 사용하면 불필요한 DOM 요소의 재생성를 막고, 데이터의 변경에 따른
+      필요한 업데이트는 여전히 수행됨
+    </p>
+    <textarea style="height: 300px; width: 400px">
+// 초기 상태
 arr = [
     { id: 1, name: 'a' },
     { id: 2, name: 'b' },
@@ -45,8 +48,99 @@ arr = [
     { id: 1, name: 'a' },
     { id: 5, name: 'e' },
   ];
-</textarea>
-<p>위와 같은 예제에서 Angular는</p>
-<p>1. DOM 요소들의 순서를 새로운 배열 순서에 맞게 재배열</p>
-<p>2. 변경된 내용(id 4, 2의 name)만 업데이트</p>
-<p>3. 변경되지 않은 요소(id 3,1,5)는 그대로 유지</p>
+  </textarea
+    >
+    <p>위와 같은 예제에서 Angular는</p>
+    <p>
+      1. DOM 요소들의 순서를 새로운 배열 순서에 맞게 재배열(링크드 리스트로
+      갈아끼운다)
+    </p>
+    <p>2. 변경된 내용(id 4, 2의 name)만 업데이트</p>
+    <p>3. 변경되지 않은 요소(id 3,1,5)는 그대로 유지</p>
+  </div>
+  <div style="display: block; border: solid 0.1rem; padding: 20px">
+    <h2>angular 반복문 체크 함수</h2>
+    <pre><code class="language-javascript">
+check(collection: NgIterable&lt;V&gt;): boolean {{'{'}}
+  this._reset();
+
+  let record: IterableChangeRecord_&lt;V&gt; | null = this._itHead;
+  let mayBeDirty: boolean = false;
+  let index: number;
+  let item: V;
+  let itemTrackBy: any;
+  if (Array.isArray(collection)) {{'{'}}
+    (this as Writable&lt;this&gt;).length = collection.length;
+
+    for (let index = 0; index &lt; this.length; index++) {{'{'}}
+      item = collection[index];
+      itemTrackBy = this._trackByFn(index, item);
+      if (record === null || !Object.is(record.trackById, itemTrackBy)) {{'{'}}
+        record = this._mismatch(record, item, itemTrackBy, index);
+        mayBeDirty = true;
+      {{'}'}} else {{'{'}}
+        if (mayBeDirty) {{'{'}}
+          // TODO(misko): can we limit this to duplicates only?
+          record = this._verifyReinsertion(record, item, itemTrackBy, index);
+        {{'}'}}
+        if (!Object.is(record.item, item)) this._addIdentityChange(record, item);
+      {{'}'}}
+
+      record = record._next;
+    {{'}'}}
+  {{'}'}} else {{'{'}}
+    index = 0;
+    iterateListLike(collection, (item: V) =&gt; {{'{'}}
+      itemTrackBy = this._trackByFn(index, item);
+      if (record === null || !Object.is(record.trackById, itemTrackBy)) {{'{'}}
+        record = this._mismatch(record, item, itemTrackBy, index);
+        mayBeDirty = true;
+      {{'}'}} else {{'{'}}
+        if (mayBeDirty) {{'{'}}
+          // TODO(misko): can we limit this to duplicates only?
+          record = this._verifyReinsertion(record, item, itemTrackBy, index);
+        {{'}'}}
+        if (!Object.is(record.item, item)) this._addIdentityChange(record, item);
+      {{'}'}}
+      record = record._next;
+      index++;
+    {{'}'}});
+    (this as Writable&lt;this&gt;).length = index;
+  {{'}'}}
+
+  this._truncate(record);
+  (this as Writable&lt;this&gt;).collection = collection;
+  return this.isDirty;
+{{'}'}}
+
+  /** &#64;internal */
+  _reinsertAfter(
+    record: IterableChangeRecord_&lt;V&gt;,
+    prevRecord: IterableChangeRecord_&lt;V&gt; | null,
+    index: number,
+  ): IterableChangeRecord_&lt;V&gt; {{'{'}}
+    if (this._unlinkedRecords !== null) {{'{'}}
+      this._unlinkedRecords.remove(record);
+    {{'}'}}
+    const prev = record._prevRemoved;
+    const next = record._nextRemoved;
+
+    if (prev === null) {{'{'}}
+      this._removalsHead = next;
+    {{'}'}} else {{'{'}}
+      prev._nextRemoved = next;
+    {{'}'}}
+    if (next === null) {{'{'}}
+      this._removalsTail = prev;
+    {{'}'}} else {{'{'}}
+      next._prevRemoved = prev;
+    {{'}'}}
+
+    this._insertAfter(record, prevRecord, index);
+    this._addToMoves(record, index);
+    return record;
+  {{'}'}}
+    
+    </code></pre>
+  </div>
+</div>
